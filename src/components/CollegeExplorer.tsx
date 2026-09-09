@@ -85,10 +85,11 @@ export function CollegeExplorer() {
       setPage(1);
     }, 300);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [q, state, type, maxFees, minRating, sort]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchColleges(page > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryString]);

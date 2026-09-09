@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #12203f;
+  --ink-soft: #2c3e63;
+  --paper: #f8f7f3;
+  --paper-raised: #ffffff;
+  --line: #e3e0d6;
+  --amber: #d99a3d;
+  --amber-deep: #b87d24;
+  --slate: #4b5265;
+  --success: #2f7a4f;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-line: var(--line);
+  --color-amber: var(--amber);
+  --color-amber-deep: var(--amber-deep);
+  --color-slate: var(--slate);
+  --color-success: var(--success);
+  --font-display: var(--font-source-serif);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+* {
+  scrollbar-color: var(--ink-soft) var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber-deep);
+  outline-offset: 2px;
+}

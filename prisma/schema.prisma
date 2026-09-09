@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model College {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  city        String
+  state       String
+  type        String   // "Government" | "Private" | "Deemed"
+  fees        Int      // annual fees in INR
+  rating      Float    // 0-5
+  established Int?
+  overview    String   @db.Text
+  logoColor   String   @default("#4F46E5")
+
+  courses     Course[]
+  placements  PlacementYear[]
+  reviews     Review[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([city])
+  @@index([state])
+  @@index([fees])
+  @@index([rating])
+}
+
+model Course {
+  id         String  @id @default(cuid())
+  collegeId  String
+  college    College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  name       String
+  duration   String  // e.g. "4 years"
+  fees       Int
+  seats      Int
+
+  @@index([collegeId])
+}
+
+model PlacementYear {
+  id            String  @id @default(cuid())
+  collegeId     String
+  college       College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  year          Int
+  avgPackage    Int     // in INR
+  highestPackage Int    // in INR
+  placementRate Float   // percentage 0-100
+  topRecruiters String  // comma separated
+
+  @@index([collegeId])
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  collegeId  String
+  college    College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  authorName String
+  rating     Float
+  comment    String   @db.Text
+  createdAt  DateTime @default(now())
+
+  @@index([collegeId])
+}
